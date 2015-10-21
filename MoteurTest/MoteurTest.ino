@@ -165,6 +165,14 @@ void creneau(int direction){
     tourneArriereGauche(100, 400);
     delay(50);
     avance(100, 100);
+  } else {
+    tourneArriereGauche(100, 400);
+    delay(50);
+    recule(100, 200);
+    delay(50);
+    tourneArriereDroite(100, 400);
+    delay(50);
+    avance(100, 100);
   }
 }
 
