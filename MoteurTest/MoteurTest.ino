@@ -30,21 +30,11 @@ void setup() {
 void loop() {
 
     //Calcul distance devant
-    digitalWrite(TRIGG,HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIGG,LOW);
-    delayMicroseconds(30);
-    distance_devant=pulseIn(ECHOG, HIGH);
-    distance_devant=distance_devant/58;
+    distance_devant=getDistanceDevant();
 
     // Calcul distance à droite
-    digitalWrite(TRIGD,HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIGD,LOW);
-    delayMicroseconds(30);
-    distance_droite=pulseIn(ECHOD, HIGH);
-    distance_droite=distance_droite/58;
-
+    distance_droite=getDistanceDroite();
+    
     analogWrite(MOTEURSG, vitesse); 
     analogWrite(MOTEURSD, vitesse);
     digitalWrite(CONTROLED1, HIGH);
@@ -69,6 +59,23 @@ void loop() {
     }
 }
 
+long getDistanceDevant(){
+    digitalWrite(TRIGG,HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIGG,LOW);
+    delayMicroseconds(30);
+    distance_devant=pulseIn(ECHOG, HIGH);
+    return distance_devant/58;
+}
+
+long getDistanceDroite(){
+    digitalWrite(TRIGD,HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIGD,LOW);
+    delayMicroseconds(30);
+    distance_droite=pulseIn(ECHOD, HIGH);
+    return distance_droite/58;
+}
 
 void tourneDroite(int speed){
   digitalWrite(CONTROLED1, LOW);
