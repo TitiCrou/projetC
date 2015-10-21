@@ -109,3 +109,48 @@ void tourneGauche(int speed){
   analogWrite(MOTEURSD, speed);
   analogWrite(MOTEURSG, speed);
 }
+
+void tourneArriereDroite(int speed, int time){
+  digitalWrite(CONTROLED1, LOW);
+  digitalWrite(CONTROLED2, HIGH);
+  digitalWrite(CONTROLEG1, LOW);
+  digitalWrite(CONTROLEG2, HIGH);
+  analogWrite(MOTEURSD, 0);
+  analogWrite(MOTEURSG, speed);
+  delay(time);
+}
+
+
+void tourneArriereGauche(int speed, int time){
+  digitalWrite(CONTROLED1, LOW);
+  digitalWrite(CONTROLED2, HIGH);
+  digitalWrite(CONTROLEG1, LOW);
+  digitalWrite(CONTROLEG2, HIGH);
+  analogWrite(MOTEURSD, speed);
+  analogWrite(MOTEURSG, 0);
+  delay(time);
+}
+
+void avance(int speed, int time){
+  digitalWrite(CONTROLED1, HIGH);
+  digitalWrite(CONTROLED2, LOW);
+  digitalWrite(CONTROLEG1, HIGH);
+  digitalWrite(CONTROLEG2, LOW);
+  analogWrite(MOTEURSD, speed);
+  analogWrite(MOTEURSG, speed);
+  delay(time);
+  analogWrite(MOTEURSD, 0);
+  analogWrite(MOTEURSG, 0);
+}
+
+void creneau(int direction){
+  // 0 à gauche, 1 à droite
+  if (direction = 1){
+    tourneArriereDroite(100, 400);
+    delay(50);
+    tourneArriereGauche(100, 400);
+    delay(50);
+    avance(100, 100);
+  }
+}
+
