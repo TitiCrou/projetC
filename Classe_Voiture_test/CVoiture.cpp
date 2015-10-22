@@ -25,7 +25,9 @@ CVoiture::CVoiture(struct Moteur MG, struct Moteur MD, struct CapteurUs CDR , st
 		capteurDroite.ECHO = CDR.ECHO;
 
 		this->setup();
-
+		vitesse =0;
+		avance =0;
+		fadeAmount=7;
 
 }
 
@@ -54,11 +56,35 @@ void CVoiture::avancer(){
         digitalWrite(moteursDroit.pinControle2,LOW);
       }
     avance =1;
-		if (vitesse <=250){
+		if (vitesse <=248){
 			vitesse = vitesse + fadeAmount;   
-      analogWrite(moteursGauche.pinEnable,vitesse);
-      analogWrite(moteursDroit.pinEnable,vitesse);
+		        analogWrite(moteursGauche.pinEnable,vitesse);
+    			analogWrite(moteursDroit.pinEnable,vitesse);
 		}
 
 
+}
+
+void CVoiture::tournerGauche(int time, int speed){
+	vitesse = speed;
+	digitalWrite(moteursDroit.pineEnable,LOW);
+	digitalWrite(moteursDroit.pinControle1,LOW);
+	digitalWrite(moteursDroit.pinControle2,LOW);
+
+	analogWrite(moteursGauche.pinEnable,speed);
+	digitalWrite(moteursGauche.pinControle1,HIGH);
+	digitalWrite(moteursGauche.pinControle2,LOW);
+	delay(time);
+}
+
+void CVoiture::tournerDroite(int time, int speed){
+	vitesse = speed;
+	digitalWrite(moteursGauche.pinEnable,LOW);
+	digitalWrite(moteursGauche.pinControle1,LOW);
+	digitalWrite(moteursGauche.pinControle2,LOW);
+
+	analogWrite(moteursDroit.pinEnable,speed);
+	digitalWrite(moteursDroit.pinControle1,HIGH);
+	digitalWrite(moteursDroit.pinControle2,LOW);
+	delay(time);
 }

@@ -13,17 +13,20 @@ class CVoiture{
 
 	public : 
 		CVoiture(struct Moteur MG, struct Moteur MD,  struct CapteurUs CDR
++
 				,struct CapteurUs CDE);
 		void setVitesse(int v){vitesse=v;};
 		int getVitesse(){ return vitesse;};
-		void tourner();
+		void tournerGauche(int time, unsigned char speed);
+		void tournerDroite(int time, unsigned char speed);
 		void reculer();
 		void avancer();
+		bool avance(){return avance;};
 	private :
-    bool avance=0;
+ 		bool avance;
 		void setup();
-    int vitesse=0;
-		int fadeAmount=7;
+    		unsigned char vitesse;
+		int fadeAmount;
 		struct Moteur moteursGauche;
 		struct Moteur moteursDroit;
 		struct CapteurUs capteurDevant;

@@ -28,7 +28,7 @@ void setup() {
   CDR.TRIG = 2;
   CDR.ECHO = 3;
 
-  voiture = new CVoiture(MG,MD,CDR,CDE); // Constructeur Moteur droit, moteur gauche, capteur droit , capteur devant
+  voiture = new CVoiture(MG,MD,CDR,CDE); // Constructeur Moteur gauche, moteur droit, capteur droit , capteur devant
 }
 
 void loop() {
