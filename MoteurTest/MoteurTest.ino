@@ -28,7 +28,7 @@ void setup() {
 }
 
 void loop() {
-
+    /*
     //Calcul distance devant
     distance_devant=getDistanceDevant();
 
@@ -56,7 +56,11 @@ void loop() {
         tourneDroite(175);
     } else if (distance_devant <=30 && distance_droite <=30){
         tourneGauche(175);
-    }
+    }*/
+    /*creneau(1, 150);
+    delay(5000);
+    */
+    murDroit();
 }
 
 long getDistanceDevant(){
@@ -77,14 +81,14 @@ long getDistanceDroite(){
     return distance_droite/58;
 }
 
-void tourneDroite(int speed){
+void tourneDroite(int speed, int time){
   digitalWrite(CONTROLED1, LOW);
   digitalWrite(CONTROLED2, HIGH);
   digitalWrite(CONTROLEG1, HIGH);
   digitalWrite(CONTROLEG2, LOW);
   analogWrite(MOTEURSD, speed);
   analogWrite(MOTEURSG, speed);
-  delay(200);
+  delay(time);
   digitalWrite(CONTROLED1, HIGH);
   digitalWrite(CONTROLED2, LOW);
   digitalWrite(CONTROLEG1, HIGH);
@@ -94,14 +98,14 @@ void tourneDroite(int speed){
 }
 
 
-void tourneGauche(int speed){
+void tourneGauche(int speed, int time){
   digitalWrite(CONTROLED1, HIGH);
   digitalWrite(CONTROLED2, LOW);
   digitalWrite(CONTROLEG1, LOW);
   digitalWrite(CONTROLEG2, HIGH);
   analogWrite(MOTEURSD, speed);
   analogWrite(MOTEURSG, speed);
-  delay(200);
+  delay(time);
   digitalWrite(CONTROLED1, HIGH);
   digitalWrite(CONTROLED2, LOW);
   digitalWrite(CONTROLEG1, HIGH);
@@ -139,8 +143,6 @@ void avance(int speed, int time){
   analogWrite(MOTEURSD, speed);
   analogWrite(MOTEURSG, speed);
   delay(time);
-  analogWrite(MOTEURSD, 0);
-  analogWrite(MOTEURSG, 0);
 }
 
 void recule(int speed, int time){
@@ -151,28 +153,53 @@ void recule(int speed, int time){
   analogWrite(MOTEURSD, speed);
   analogWrite(MOTEURSG, speed);
   delay(time);
+}
+
+void stopMoteurs(){
   analogWrite(MOTEURSD, 0);
   analogWrite(MOTEURSG, 0);
 }
 
-void creneau(int direction){
+void creneau(int direction, int speed){
   // 0 à gauche, 1 à droite
   if (direction = 1){
-    tourneArriereDroite(100, 400);
+    recule(speed, 300);
     delay(50);
-    recule(100, 200);
+    tourneArriereDroite(speed, 1000);
     delay(50);
-    tourneArriereGauche(100, 400);
+    recule(speed, 500);
     delay(50);
-    avance(100, 100);
+    tourneArriereGauche(speed, 1400);
+    delay(50);
+    avance(speed, 500);
+    stopMoteurs();
   } else {
-    tourneArriereGauche(100, 400);
+    recule(speed, 300);
     delay(50);
-    recule(100, 200);
+    tourneArriereGauche(speed, 1000);
     delay(50);
-    tourneArriereDroite(100, 400);
+    recule(speed, 500);
     delay(50);
-    avance(100, 100);
+    tourneArriereDroite(speed, 1400);
+    delay(50);
+    avance(speed, 500);
+    stopMoteurs();
   }
+}
+
+void murDroit(){
+    distance_droite=getDistanceDroite();
+
+    if (distance_droite>=10 && distance_droite<=15){
+      avance(250, 0);
+    } else if (distance_droite < 10){
+      tourneGauche(250, 100);
+      delay(100);
+      tourneDroite(250, 100);
+    } else if (distance_droite > 15){
+      tourneDroite(250, 100);
+      delay(100);
+      tourneGauche(250, 100);
+    }
 }
 
