@@ -24,7 +24,7 @@ class CVoiture{
 		void avancer(int vitesse);
 		int get_IR_Gauche();
 		int get_IR_Droit();
-		bool avance(){return avance;};
+		bool get_avance(){return avance;};
 	private :
 		bool avance;
 		int IR_Gauche;
