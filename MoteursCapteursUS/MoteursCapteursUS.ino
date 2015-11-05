@@ -40,14 +40,15 @@ void loop() {
     if (distance_gauche <20 && distance_droite < 20){
         voiture->reculer(200);
         delay(500);
+        voiture->tournerGauche(200,150);
     }  
     //On tourne sur le coté où le mur est le plus proche sinon on avance
-    else if (distance_droite <15){
-        voiture->tournerGauche(200,150);
+    else if (distance_droite <12){
+        voiture->tournerGauche(500,150);
        
     }
     //On tourne sur le coté où le mur est le plus proche sinon on avance
-    else if (distance_gauche<15){
+    else if (distance_gauche<12){
         voiture->tournerDroite(200,150);
        
     }
