@@ -93,7 +93,7 @@ void CVoiture::setupUS(){
 		vitesse=0;
 }
 
-void CVoiture::avancer(){
+void CVoiture::avancer(int vitesse=-1){
     if (avance ==0){
         digitalWrite(moteursGauche.pinControle1,HIGH);
         digitalWrite(moteursGauche.pinControle2,LOW);
@@ -101,27 +101,40 @@ void CVoiture::avancer(){
         digitalWrite(moteursDroit.pinControle2,LOW);
       }
     avance =1;
+	if (vitesse!=-1){
 		if (vitesse <=248){
 			vitesse = vitesse + fadeAmount;   
 		        analogWrite(moteursGauche.pinEnable,vitesse);
     			analogWrite(moteursDroit.pinEnable,vitesse);
 		}
+	}
+	else {
+		analogWrite(moteursGauche.pinEnable,vitesse);
+    		analogWrite(moteursDroit.pinEnable,vitesse);
 
+	}
 
 }
 
-void CVoiture::reculer(){
+void CVoiture::reculer(int vitesse=-1){
   if (avance==1){
         digitalWrite(moteursGauche.pinControle1,LOW);
         digitalWrite(moteursGauche.pinControle2,HIGH);
         digitalWrite(moteursDroit.pinControle1,LOW);
         digitalWrite(moteursDroit.pinControle2,HIGH);
   }
-  avance=0;
-  if(vitesse <=248){
-    vitesse = vitesse + fadeAmount;
-    analogWrite(moteursGauche.pinEnable,vitesse);
-    analogWrite(moteursDroit.pinEnable,vitesse);
+  avance=0; 
+  if(vitesse!=-1){
+    if(vitesse <=248){
+        vitesse = vitesse + fadeAmount;
+        analogWrite(moteursGauche.pinEnable,vitesse);
+        analogWrite(moteursDroit.pinEnable,vitesse);
+    }
+  }
+  else {
+   analogWrite(moteursGauche.pinEnable,vitesse);
+        analogWrite(moteursDroit.pinEnable,vitesse);
+
   }
 }
 

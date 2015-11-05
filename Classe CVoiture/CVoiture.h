@@ -20,8 +20,8 @@ class CVoiture{
 		int getVitesse(){ return vitesse;};
 		void tournerGauche(int time, unsigned char speed);
 		void tournerDroite(int time, unsigned char speed);
-		void reculer();
-		void avancer();
+		void reculer(int vitesse);
+		void avancer(int vitesse);
 		int get_IR_Gauche();
 		int get_IR_Droit();
 		bool avance(){return avance;};
