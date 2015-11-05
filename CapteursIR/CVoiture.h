@@ -24,9 +24,9 @@ class CVoiture{
 		void avancer();
 		int get_IR_Gauche();
 		int get_IR_Droit();
-		bool avance(){return avance;};
+    bool get_avance(){return avance;};
 	private :
-		bool avance;
+    bool avance;
 		int IR_Gauche;
 		int IR_Droit;
 		void setupUS();

@@ -1,4 +1,6 @@
 #include "CVoiture.h"
+#include "Arduino.h"
+
 
 CVoiture::CVoiture(struct Moteur MG, struct Moteur MD, struct CapteurUs CDR , struct CapteurUs CDV){
 		// Moteurs Gauche
@@ -106,9 +108,8 @@ void CVoiture::avancer(){
 		        analogWrite(moteursGauche.pinEnable,vitesse);
     			analogWrite(moteursDroit.pinEnable,vitesse);
 		}
-
-
 }
+
 
 void CVoiture::reculer(){
   if (avance==1){
@@ -125,6 +126,7 @@ void CVoiture::reculer(){
   }
 }
 
+
 void CVoiture::tournerGauche(int time, unsigned char speed){
 	vitesse = speed;
 	digitalWrite(moteursDroit.pinEnable,LOW);
@@ -137,7 +139,7 @@ void CVoiture::tournerGauche(int time, unsigned char speed){
 	delay(time);
 }
 
-void CVoiture::tournerDroite(int time, unsigned char speed){
+void CVoiture::tournerDroite(int time, unsigned char  speed){
 	vitesse = speed;
 	digitalWrite(moteursGauche.pinEnable,LOW);
 	digitalWrite(moteursGauche.pinControle1,LOW);
