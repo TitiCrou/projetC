@@ -1,7 +1,6 @@
 #include "CVoiture.h"
 #include "Arduino.h"
 
-
 CVoiture::CVoiture(struct Moteur MG, struct Moteur MD, struct CapteurUs CDR , struct CapteurUs CDV){
 		// Moteurs Gauche
 
@@ -95,7 +94,7 @@ void CVoiture::setupUS(){
 		vitesse=0;
 }
 
-void CVoiture::avancer(){
+void CVoiture::avancer(int vit){
     if (avance ==0){
         digitalWrite(moteursGauche.pinControle1,HIGH);
         digitalWrite(moteursGauche.pinControle2,LOW);
@@ -103,50 +102,113 @@ void CVoiture::avancer(){
         digitalWrite(moteursDroit.pinControle2,LOW);
       }
     avance =1;
+	if (vit==-1){
 		if (vitesse <=248){
 			vitesse = vitesse + fadeAmount;   
 		        analogWrite(moteursGauche.pinEnable,vitesse);
     			analogWrite(moteursDroit.pinEnable,vitesse);
 		}
+	}
+	else {
+	    	analogWrite(moteursGauche.pinEnable,vit);
+    		analogWrite(moteursDroit.pinEnable,vit);
+        vitesse=vit;
+
+	}
+
 }
 
-
-void CVoiture::reculer(){
+void CVoiture::reculer(int vit){
   if (avance==1){
         digitalWrite(moteursGauche.pinControle1,LOW);
         digitalWrite(moteursGauche.pinControle2,HIGH);
         digitalWrite(moteursDroit.pinControle1,LOW);
         digitalWrite(moteursDroit.pinControle2,HIGH);
   }
-  avance=0;
-  if(vitesse <=248){
-    vitesse = vitesse + fadeAmount;
-    analogWrite(moteursGauche.pinEnable,vitesse);
-    analogWrite(moteursDroit.pinEnable,vitesse);
+  avance=0; 
+  if(vit==-1){
+    if(vitesse <=248){
+        vitesse = vitesse + fadeAmount;
+        analogWrite(moteursGauche.pinEnable,vitesse);
+        analogWrite(moteursDroit.pinEnable,vitesse);
+    }
+  }
+  else {
+        analogWrite(moteursGauche.pinEnable,vit);
+        analogWrite(moteursDroit.pinEnable,vit);
+        vitesse=vit;
+
   }
 }
 
-
-void CVoiture::tournerGauche(int time, unsigned char speed){
-	vitesse = speed;
-	digitalWrite(moteursDroit.pinEnable,LOW);
+void CVoiture::tournerGauche(int time, unsigned char vit){
+	vitesse = vit;
+	digitalWrite(moteursDroit.pinEnable,vit);
 	digitalWrite(moteursDroit.pinControle1,LOW);
-	digitalWrite(moteursDroit.pinControle2,LOW);
+	digitalWrite(moteursDroit.pinControle2,HIGH);
 
-	analogWrite(moteursGauche.pinEnable,speed);
+	analogWrite(moteursGauche.pinEnable,vit);
 	digitalWrite(moteursGauche.pinControle1,HIGH);
 	digitalWrite(moteursGauche.pinControle2,LOW);
 	delay(time);
+  avance=0;
+
+/*// On remet les états conformes aux états d'arrivés
+  if (avance){
+      digitalWrite(moteursDroit.pinEnable,vitesse);
+      digitalWrite(moteursDroit.pinControle1,HIGH);
+      digitalWrite(moteursDroit.pinControle2,LOW);
+  }
+  else{
+      digitalWrite(moteursDroit.pinEnable,vitesse);
+      digitalWrite(moteursDroit.pinControle1,LOW);
+     digitalWrite(moteursDroit.pinControle2,HIGH);
+  }*/
 }
 
-void CVoiture::tournerDroite(int time, unsigned char  speed){
-	vitesse = speed;
-	digitalWrite(moteursGauche.pinEnable,LOW);
+void CVoiture::tournerDroite(int time, unsigned char vit){
+	vitesse = vit;
+	digitalWrite(moteursGauche.pinEnable,vit);
 	digitalWrite(moteursGauche.pinControle1,LOW);
-	digitalWrite(moteursGauche.pinControle2,LOW);
+	digitalWrite(moteursGauche.pinControle2,HIGH);
 
-	analogWrite(moteursDroit.pinEnable,speed);
+	analogWrite(moteursDroit.pinEnable,vit);
 	digitalWrite(moteursDroit.pinControle1,HIGH);
 	digitalWrite(moteursDroit.pinControle2,LOW);
 	delay(time);
+  avance=0;
+  
+ /* // On remet les états conformes aux états d'arrivés
+  if (avance){
+      digitalWrite(moteursGauche.pinEnable,vitesse);
+      digitalWrite(moteursGauche.pinControle1,HIGH);
+      digitalWrite(moteursGauche.pinControle2,LOW);
+  }
+  else {
+      digitalWrite(moteursGauche.pinEnable,vitesse);
+      digitalWrite(moteursGauche.pinControle1,LOW);
+      digitalWrite(moteursGauche.pinControle2,HIGH);
+  }*/
+}
+
+int CVoiture::get_US_Gauche(){
+	int distance_gauche;
+	digitalWrite(capteurDevant.TRIG,HIGH);
+	delayMicroseconds(10);
+    	digitalWrite(capteurDevant.TRIG,LOW);
+    	delayMicroseconds(30);
+    	distance_gauche=pulseIn(capteurDevant.ECHO, HIGH);
+    	distance_gauche=distance_gauche/29/2;
+     return distance_gauche;
+}
+
+int CVoiture::get_US_Droite(){
+	int distance_droite;
+	digitalWrite(capteurDroite.TRIG,HIGH);
+	delayMicroseconds(10);
+    	digitalWrite(capteurDroite.TRIG,LOW);
+    	delayMicroseconds(30);
+    	distance_droite=pulseIn(capteurDroite.ECHO, HIGH);
+    	distance_droite=distance_droite/29/2;
+      return distance_droite;
 }

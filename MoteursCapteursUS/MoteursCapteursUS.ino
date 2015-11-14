@@ -7,15 +7,15 @@ void setup() {
       //Création structures
 
     // Structures moteurs
-    struct Moteur MG;
-    MG.pinControle1 = 11;
-    MG.pinControle2 = 10;
-    MG.pinEnable = 6;
-  
     struct Moteur MD;
-    MD.pinControle1 = 8;
-    MD.pinControle2 = 7;
-    MD.pinEnable = 5;
+    MD.pinControle1 = 11;
+    MD.pinControle2 = 10;
+    MD.pinEnable = 6;
+  
+    struct Moteur MG;
+    MG.pinControle1 = 8;
+    MG.pinControle2 = 7;
+    MG.pinEnable = 5;
   
     // Structures capteurs
     struct CapteurUs CDE;

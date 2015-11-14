@@ -9,15 +9,15 @@ void setup() {
   //Création structures
 
   // Structures moteurs
-  struct Moteur MG;
-  MG.pinControle1 = 11;
-  MG.pinControle2 = 10;
-  MG.pinEnable = 6;
-
   struct Moteur MD;
-  MD.pinControle1 = 8;
-  MD.pinControle2 = 7;
-  MD.pinEnable = 5;
+  MD.pinControle1 = 11;
+  MD.pinControle2 = 10;
+  MD.pinEnable = 6;
+
+  struct Moteur MG;
+  MG.pinControle1 = 8;
+  MG.pinControle2 = 7;
+  MG.pinEnable = 5;
 
   int IRG = 4;
   int IRD = 9;
@@ -33,16 +33,14 @@ void loop() {
   levelG = voiture->get_IR_Gauche();
   levelD = voiture-> get_IR_Droit();
 
-  if (levelG==0) //Quand on capte le noir sur la ligne gauche
+  if (levelG==1) //Quand on capte le noir sur la ligne gauche
   {
-    voiture->tournerGauche(300,120);
-    voiture->tournerDroite(300,110);
-    }
-    else if (levelD==0) //Quand on capte le noir sur la ligne gauche
-    {
-      voiture->tournerDroite(300,120);
-      voiture->tournerGauche(300,110);
-    }
-    else voiture->reculer();
+    voiture->tournerGauche(230,90);
+  }
+  else if (levelD==1) //Quand on capte le noir sur la ligne droite
+  {
+    voiture->tournerDroite(230,90);
+  }
+    else voiture->avancer(120);
 
 }
