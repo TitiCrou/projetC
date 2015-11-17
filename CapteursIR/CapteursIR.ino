@@ -41,6 +41,10 @@ void loop() {
   {
     voiture->tournerDroite(230,90);
   }
-    else voiture->avancer(120);
+    else{
+      voiture->avancer(200); //Impulsion pour entrainer les moteurs
+          // Puis ralentir pour avoir une vitesse faible
+      voiture->avancer(60);
+    }
 
 }
