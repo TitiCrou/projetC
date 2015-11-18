@@ -57,10 +57,10 @@ void loop() {
     } else if (distance_devant <=30 && distance_droite <=30){
         tourneGauche(175);
     }*/
-    /*creneau(1, 150);
+    creneau(1,150);
     delay(5000);
-    */
-    murDroit();
+    
+    //murDroit();
 }
 
 long getDistanceDevant(){
@@ -82,17 +82,13 @@ long getDistanceDroite(){
 }
 
 void tourneDroite(int speed, int time){
-  digitalWrite(CONTROLED1, LOW);
-  digitalWrite(CONTROLED2, HIGH);
-  digitalWrite(CONTROLEG1, HIGH);
-  digitalWrite(CONTROLEG2, LOW);
-  analogWrite(MOTEURSD, speed);
-  analogWrite(MOTEURSG, speed);
-  delay(time);
   digitalWrite(CONTROLED1, HIGH);
   digitalWrite(CONTROLED2, LOW);
   digitalWrite(CONTROLEG1, HIGH);
   digitalWrite(CONTROLEG2, LOW);
+  analogWrite(MOTEURSD, speed-100);
+  analogWrite(MOTEURSG, speed);
+  delay(time);
   analogWrite(MOTEURSD, speed);
   analogWrite(MOTEURSG, speed);
 }
@@ -101,15 +97,11 @@ void tourneDroite(int speed, int time){
 void tourneGauche(int speed, int time){
   digitalWrite(CONTROLED1, HIGH);
   digitalWrite(CONTROLED2, LOW);
-  digitalWrite(CONTROLEG1, LOW);
-  digitalWrite(CONTROLEG2, HIGH);
-  analogWrite(MOTEURSD, speed);
-  analogWrite(MOTEURSG, speed);
-  delay(time);
-  digitalWrite(CONTROLED1, HIGH);
-  digitalWrite(CONTROLED2, LOW);
   digitalWrite(CONTROLEG1, HIGH);
   digitalWrite(CONTROLEG2, LOW);
+  analogWrite(MOTEURSD, speed);
+  analogWrite(MOTEURSG, speed-100);
+  delay(time);
   analogWrite(MOTEURSD, speed);
   analogWrite(MOTEURSG, speed);
 }
@@ -187,6 +179,7 @@ void creneau(int direction, int speed){
   }
 }
 
+
 void murDroit(){
     distance_droite=getDistanceDroite();
 
@@ -202,4 +195,6 @@ void murDroit(){
       tourneGauche(250, 100);
     }
 }
+
+
 
